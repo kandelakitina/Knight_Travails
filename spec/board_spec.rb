@@ -38,4 +38,28 @@ RSpec.describe Board do
       expect(board.valid_move?([10, 2])).to be false
     end
   end
+
+  describe '#possible_moves' do
+    it 'returns only valid knight moves from a central position' do
+      result = board.possible_moves([4, 4])
+      expected_moves = [
+        [5, 6], [5, 2], [3, 6], [3, 2],
+        [6, 5], [6, 3], [2, 5], [2, 3]
+      ]
+      expect(result).to match_array(expected_moves)
+    end
+
+    it 'excludes out-of-bounds moves from a corner position' do
+      result = board.possible_moves([0, 0])
+      expected_moves = [
+        [1, 2], [2, 1]
+      ]
+      expect(result).to match_array(expected_moves)
+    end
+
+    it 'returns an empty array if no moves are valid (e.g. from [-1, -1])' do
+      result = board.possible_moves([-1, -1])
+      expect(result).to eq([])
+    end
+  end
 end
