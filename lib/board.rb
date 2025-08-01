@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Board
-  attr_reader :positions
+  attr_reader :positions, :size
 
   def initialize(size = 8)
+    @size = size
     @positions = generate_positions(size)
   end
 
@@ -13,5 +14,10 @@ class Board
         [row, col]
       end
     end
+  end
+
+  def valid_move?(position)
+    x, y = position
+    x.between?(0, size - 1) && y.between?(0, size - 1)
   end
 end
