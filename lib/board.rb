@@ -4,21 +4,12 @@ class Board
   KNIGHT_MOVES = [
     [1, 2], [1, -2], [-1, 2], [-1, -2],
     [2, 1], [2, -1], [-2, 1], [-2, -1]
-  ]
+  ].freeze
 
-  attr_reader :positions, :size
+  attr_reader :size
 
   def initialize(size = 8)
     @size = size
-    @positions = generate_positions(size)
-  end
-
-  def generate_positions(size)
-    (0...size).flat_map do |row|
-      (0...size).map do |col|
-        [row, col]
-      end
-    end
   end
 
   def valid_move?(position)
