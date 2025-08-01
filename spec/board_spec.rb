@@ -5,13 +5,13 @@ RSpec.describe Board do
   subject(:board) { described_class.new }
 
   describe '#initialize' do
-    it 'creates an 8x8 grid of coordinate pairs' do
-      expect(board.grid.size).to eq(8)
-      expect(board.grid.all? { |row| row.size == 8 }).to be true
+    it 'creates an array of all coordinate pairs on an 8x8 board' do
+      expect(board.positions.size).to eq(64)
+      expect(board.positions).to include([0, 0], [3, 4], [7, 7])
 
-      # Check a few sample values
-      expect(board.grid[0][0]).to eq([0, 0])
-      expect(board.grid[7][7]).to eq([7, 7])
+      # Check uniqueness and validity
+      expect(board.positions.uniq.size).to eq(64)
+      expect(board.positions.all? { |x, y| x.between?(0, 7) && y.between?(0, 7) }).to be true
     end
   end
 end
