@@ -25,6 +25,8 @@ class Board
          .select { |new_pos| valid_move?(new_pos) }
   end
 
+  require 'set'
+
   def knight_moves(start, target)
     return [] unless valid_move?(start) && valid_move?(target)
     return [start] if start == target
@@ -36,7 +38,7 @@ class Board
       path = queue.shift
       current = path.last
 
-      return path if current == target
+      return print_path(path) if current == target
 
       possible_moves(current).each do |move|
         next if visited.include?(move)
@@ -45,5 +47,10 @@ class Board
         queue << (path + [move])
       end
     end
+  end
+
+  def print_path(path)
+    puts "Your path is #{path.first} to #{path.last}. You made it in #{path.length - 1} moves! Here's your path:"
+    path.each { |move| puts move.inspect }
   end
 end
