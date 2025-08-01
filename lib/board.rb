@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Board
-  KNIGHT_MOVES = [
+  MOVES = [
     [1, 2], [1, -2], [-1, 2], [-1, -2],
     [2, 1], [2, -1], [-2, 1], [-2, -1]
   ].freeze
@@ -21,7 +21,29 @@ class Board
     return [] unless valid_move?(position)
 
     x, y = position
-    KNIGHT_MOVES.map { |dx, dy| [x + dx, y + dy] }
-                .select { |new_pos| valid_move?(new_pos) }
+    MOVES.map { |dx, dy| [x + dx, y + dy] }
+         .select { |new_pos| valid_move?(new_pos) }
+  end
+
+  def knight_moves(start, target)
+    return [] unless valid_move?(start) && valid_move?(target)
+    return [start] if start == target
+
+    visited = Set.new
+    queue = [[start]]
+
+    until queue.empty?
+      path = queue.shift
+      current = path.last
+
+      return path if current == target
+
+      possible_moves(current).each do |move|
+        next if visited.include?(move)
+
+        visited << move
+        queue << (path + [move])
+      end
+    end
   end
 end
